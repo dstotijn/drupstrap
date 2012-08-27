@@ -1,0 +1,26 @@
+// Import Bootstrap's variables and mixins for custom implementation
+@import "../lib/bootstrap/less/variables.less";
+@import "mixins.less";
+
+body {
+  padding-top: 40px;
+}
+
+.block-menu a.active {
+  font-weight: bold;
+}
+
+dl.admin-list dd {
+  margin-left: 0;
+  margin-bottom: @baseLineHeight / 2;
+}
+
+.element-invisible {
+  display: none;
+}
+
+.alert-status {
+  color: #3a87ad;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}

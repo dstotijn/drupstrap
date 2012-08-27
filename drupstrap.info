@@ -1,0 +1,10 @@
+name        = Drupstrap
+description = Base theme using Twitter's Bootstrap framework.
+core        = 7.x
+engine      = phptemplate
+
+features[] = name
+features[] = main_menu
+
+stylesheets[all][] = lib/bootstrap/less/bootstrap.less
+stylesheets[all][] = less/drupstrap.less
