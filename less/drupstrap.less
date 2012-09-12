@@ -3,7 +3,7 @@
 @import "mixins.less";
 
 body {
-  padding-top: 40px;
+  padding-top: @gridGutterWidth * 2;
 }
 
 .block-menu a.active {
@@ -23,4 +23,92 @@ dl.admin-list dd {
   color: #3a87ad;
   background-color: #d9edf7;
   border-color: #bce8f1;
+}
+
+.control-label {
+  font-weight: bold;
+}
+
+.form-type-checkbox .control-label,
+.form-type-radio .control-label {
+  font-weight: inherit;
+}
+
+.block-system table .control-group {
+  margin-bottom: 0;
+}
+
+.block-system td.checkbox {
+  text-align: center;
+}
+
+.block-system table label {
+  margin-bottom: 0;
+}
+
+.block-system table .checkbox input[type="checkbox"] {
+  float: none;
+  margin: 0;
+}
+
+input, textarea, .uneditable-input {
+  width: auto;
+}
+
+.container-inline div, .container-inline label {
+  display: block;
+}
+
+html.js input.form-autocomplete {
+  background-position: 100% 7px; /* LTR */
+  background-repeat: no-repeat;
+}
+
+html.js input.throbbing {
+  background-position: 100% -13px; /* LTR */
+}
+
+.vertical-tabs ul.vertical-tabs-list li {
+  background: @tableBackgroundAccent;
+}
+
+.vertical-tabs ul.vertical-tabs-list li a {
+  padding: @gridGutterWidth / 1.5;
+}
+
+.vertical-tabs ul.vertical-tabs-list li a:hover,
+.vertical-tabs ul.vertical-tabs-list li a:focus {
+  outline: 0;
+}
+
+.vertical-tabs fieldset.vertical-tabs-pane {
+  padding: @gridGutterWidth / 1.5;
+  margin: 0;
+}
+
+html.js fieldset.collapsed {
+  height: inherit;
+}
+
+h2.node-title {
+  margin-top: 0;
+}
+
+h2.node-title a {
+  color: @headingsColor;
+}
+
+h2.node-title a:hover {
+  color: @linkColor;
+  text-decoration: none;
+}
+
+.submitted {
+  margin-bottom: @baseLineHeight / 2;
+  color: @grayLight;
+  text-transform: uppercase;
+}
+
+.node-teaser .submitted {
+  margin-bottom: 0;
 }

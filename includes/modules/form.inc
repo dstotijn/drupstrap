@@ -200,4 +200,3 @@ function drupstrap_button($variables) {
   return '<button' . drupal_attributes($element['#attributes']) . '>'. $label .'</button>
   '; // This line break adds inherent margin between multiple buttons
 }
-

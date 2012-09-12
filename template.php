@@ -7,7 +7,7 @@ include_once(drupal_get_path('theme', 'drupstrap') . '/includes/modules/theme.in
 
 function drupstrap_css_alter(&$css) {
   $exclude = array(
-    'misc/vertical-tabs.css' => FALSE,
+//    'misc/vertical-tabs.css' => FALSE,
     'modules/aggregator/aggregator.css' => FALSE,
     'modules/block/block.css' => FALSE,
     'modules/book/book.css' => FALSE,
@@ -27,9 +27,9 @@ function drupstrap_css_alter(&$css) {
     'modules/syslog/syslog.css' => FALSE,
     'modules/system/admin.css' => FALSE,
     'modules/system/maintenance.css' => FALSE,
-    'modules/system/system.css' => FALSE,
-    'modules/system/system.admin.css' => FALSE,
-    'modules/system/system.base.css' => FALSE,
+//    'modules/system/system.css' => FALSE,
+//    'modules/system/system.admin.css' => FALSE,
+//    'modules/system/system.base.css' => FALSE,
     'modules/system/system.maintenance.css' => FALSE,
     'modules/system/system.menus.css' => FALSE,
     'modules/system/system.messages.css' => FALSE,
@@ -80,11 +80,11 @@ function drupstrap_process_html_tag(&$variables) {
 function drupstrap_html_head_alter(&$head) {
   // Simplify the meta tag for character encoding.
   if (isset($head['system_meta_content_type']['#attributes']['content'])) {
-    $head['system_meta_content_type']['#attributes'] = array('charset' => str_replace('text/html; charset=', '', $head['system_meta_content_type']['#attributes']['content']));
+    $head['system_meta_content_type']['#attributes'] = array(
+      'charset' => str_replace('text/html; charset=', '',
+      $head['system_meta_content_type']['#attributes']['content'])
+    );
   }
-}
-
-function drupstrap_preprocess_page(&$variables) {
 }
 
 function drupstrap_breadcrumb($variables) {
@@ -113,4 +113,15 @@ function drupstrap_breadcrumb($variables) {
     }
 
   return $output;
+}
+
+/**
+ * Implementation of preprocess_node().
+ */
+function drupstrap_preprocess_node(&$variables) {
+  if ($variables['display_submitted']) {
+    $variables['submitted'] = t('!datetime', array(
+      '!datetime' => $variables['date'],
+    ));
+  }
 }
