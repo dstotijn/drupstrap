@@ -5,7 +5,7 @@
   
   <?php if ($site_name || $site_slogan): ?>
     <?php if ($site_name): ?>
-      <h1 id="site-name">
+      <h1 id="site-name" class="page-header">
         <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home"><span><?php print $site_name; ?></span></a>
       </h1>
     <?php endif; ?>
@@ -17,7 +17,7 @@
 
   <?php print render($page['header']); ?>
 
-  <div id="main" class="row">
+  <div id="main" class="row clearfix">
 
     <?php
       // Default # of columns in a Bootstrap row
@@ -71,8 +71,12 @@
     <?php endif; ?>
   </div><!-- /#main -->
 
-  <?php print render($page['footer']); ?>
+  <footer>
+    <?php print render($page['footer']); ?>
+  </footer>
 
 </div><!-- /#page -->
+
+<a href="<?php print $base_path . 'admin'; ?>" class="admin-link"><i class="icon-wrench"></i></a>
 
 <?php print render($page['bottom']); ?>

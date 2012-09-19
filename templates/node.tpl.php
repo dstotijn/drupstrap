@@ -24,11 +24,6 @@
   <?php if (!empty($links)): ?>
       <?php print render($links) ?>
   <?php endif; ?>
-
-  <?php if (!$page): ?>
-    <hr>
-  <?php endif; ?>
-
 </div>
 
 <?php if (!empty($post_object)) print render($post_object) ?>

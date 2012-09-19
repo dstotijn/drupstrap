@@ -15,6 +15,26 @@ dl.admin-list dd {
   margin-bottom: @baseLineHeight / 2;
 }
 
+ul.inline li {
+  float: left;
+  margin-right: 6px;
+}
+
+ul.links i {
+  margin-right: 6px;
+  opacity: .25;
+
+}
+
+.node {
+  margin-bottom: @baseLineHeight;
+}
+
+footer {
+  margin: @baseLineHeight 0;
+  color: @grayLight;
+}
+
 .element-invisible {
   display: none;
 }
@@ -111,4 +131,27 @@ h2.node-title a:hover {
 
 .node-teaser .submitted {
   margin-bottom: 0;
+}
+
+.form-required {
+  color: @red;
+}
+
+.admin-link i {
+  opacity: .5;
+}
+
+.admin-link {
+  position: absolute;
+  top: @baseLineHeight;
+  right: @baseLineHeight;
+  background: @grayLighter;
+  display: inline-block;
+  padding: 10px 13px;
+  .border-radius(50px);
+  .transition(all .2s ease-in-out);
+}
+
+.admin-link:hover {
+  background: @grayLight;
 }
