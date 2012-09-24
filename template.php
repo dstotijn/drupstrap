@@ -115,6 +115,22 @@ function drupstrap_breadcrumb($variables) {
   return $output;
 }
 
+function drupstrap_preprocess_page(&$variables) {
+  $variables['sidebar_first_span'] = theme_get_setting('drupstrap_sidebar_first_span');
+  $variables['sidebar_second_span'] = theme_get_setting('drupstrap_sidebar_second_span');
+  $variables['main_span'] = 12;
+
+  if (!empty($variables['page']['sidebar_first']) && !empty($variables['page']['sidebar_second'])) {
+    $variables['main_span'] = 12 - $variables['sidebar_first_span'] - $variables['sidebar_second_span'];
+  }
+  if (!empty($variables['page']['sidebar_first']) && empty($variables['page']['sidebar_second'])) {
+    $variables['main_span'] = 12 - $variables['sidebar_first_span'];
+  }
+  if (empty($variables['page']['sidebar_first']) && !empty($variables['page']['sidebar_second'])) {
+    $variables['main_span'] = 12 - $variables['sidebar_second_span'];
+  }
+}
+
 /**
  * Implementation of preprocess_node().
  */

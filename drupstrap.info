@@ -5,9 +5,14 @@ engine      = phptemplate
 
 features[] = name
 features[] = main_menu
+features[] = logo
+features[] = favicon 
 
 stylesheets[all][] = lib/bootstrap/less/bootstrap.less
 stylesheets[all][] = less/drupstrap.less
 stylesheets[all][] = lib/bootstrap/less/responsive.less
 
 scripts[] = lib/bootstrap/js/bootstrap.min.js
+
+settings[drupstrap_sidebar_first_span] = 3
+settings[drupstrap_sidebar_second_span] = 3

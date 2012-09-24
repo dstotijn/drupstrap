@@ -1,8 +1,8 @@
 <?php if (!empty($pre_object)) print render($pre_object) ?>
 
-<div class="<?php print $classes ?>" <?php print ($attributes) ?>>
+<article class="<?php print $classes ?>" <?php print ($attributes) ?>>
   <?php if (!empty($submitted)): ?>
-    <div class="submitted"><small><?php print $submitted ?></small></div>
+    <p class="submitted"><small><?php print $submitted ?></small></p>
   <?php endif; ?>
 
   <?php if (!empty($title_prefix)) print render($title_prefix); ?>
@@ -24,6 +24,6 @@
   <?php if (!empty($links)): ?>
       <?php print render($links) ?>
   <?php endif; ?>
-</div>
+</article>
 
 <?php if (!empty($post_object)) print render($post_object) ?>
