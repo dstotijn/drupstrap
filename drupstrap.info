@@ -46,12 +46,15 @@ base theme  = zen
 
 ; First we remove the system's menu styling since Zen has its own.
 stylesheets[all][] = system.menus.css
-
 stylesheets[all][] = system.theme.css
+stylesheets[all][] = system.messages.css
+
 
 ; Then we add our own stylesheets.
 stylesheets[all][] = lib/bootstrap/less/bootstrap.less
 stylesheets[all][] = lib/bootstrap/less/responsive.less
+stylesheets[all][] = css/drupstrap.css
+
 ;stylesheets[all][] = css/normalize.css
 ;stylesheets[all][] = css/wireframes.css
 ;stylesheets[all][] = css/layouts/responsive-sidebars.css
