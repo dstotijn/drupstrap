@@ -226,6 +226,19 @@ function drupstrap_preprocess_block(&$variables, $hook) {
 // */
 
 /**
+ * Implementation of hook_theme().
+ */
+function drupstrap_theme() {
+  $items = array();
+
+  $items['form_element_option_label'] = array('arguments' => array(
+    'variables' => array(),
+  ));
+
+  return $items;
+}
+
+/**
  * Returns HTML for a query pager.
  *
  * Menu callbacks that display paged query results should call theme('pager') to
@@ -493,4 +506,228 @@ function drupstrap_menu_local_tasks(&$variables) {
   }
 
   return $output;
+}
+
+/**
+ * Returns HTML for a form element.
+ *
+ * Each form element is wrapped in a DIV container having the following CSS
+ * classes:
+ * - form-item: Generic for all form elements.
+ * - form-type-#type: The internal element #type.
+ * - form-item-#name: The internal form element #name (usually derived from the
+ *   $form structure and set via form_builder()).
+ * - form-disabled: Only set if the form element is #disabled.
+ *
+ * In addition to the element itself, the DIV contains a label for the element
+ * based on the optional #title_display property, and an optional #description.
+ *
+ * The optional #title_display property can have these values:
+ * - before: The label is output before the element. This is the default.
+ *   The label includes the #title and the required marker, if #required.
+ * - after: The label is output after the element. For example, this is used
+ *   for radio and checkbox #type elements as set in system_element_info().
+ *   If the #title is empty but the field is #required, the label will
+ *   contain only the required marker.
+ * - invisible: Labels are critical for screen readers to enable them to
+ *   properly navigate through forms but can be visually distracting. This
+ *   property hides the label for everyone except screen readers.
+ * - attribute: Set the title attribute on the element to create a tooltip
+ *   but output no label element. This is supported only for checkboxes
+ *   and radios in form_pre_render_conditional_form_element(). It is used
+ *   where a visual label is not needed, such as a table of checkboxes where
+ *   the row and column provide the context. The tooltip will include the
+ *   title and required marker.
+ *
+ * If the #title property is not set, then the label and any required marker
+ * will not be output, regardless of the #title_display or #required values.
+ * This can be useful in cases such as the password_confirm element, which
+ * creates children elements that have their own labels and required markers,
+ * but the parent element should have neither. Use this carefully because a
+ * field without an associated label can cause accessibility challenges.
+ *
+ * @param $variables
+ *   An associative array containing:
+ *   - element: An associative array containing the properties of the element.
+ *     Properties used: #title, #title_display, #description, #id, #required,
+ *     #children, #type, #name.
+ *
+ * @return
+ *   A string returning the form element output.
+ */
+function drupstrap_form_element($variables) {
+  $element = &$variables['element'];
+  // This is also used in the installer, pre-database setup.
+  $t = get_t();
+
+  // This function is invoked as theme wrapper, but the rendered form element
+  // may not necessarily have been processed by form_builder().
+  $element += array(
+    '#title_display' => 'before',
+  );
+
+  // Add element #id for #type 'item'.
+  if (isset($element['#markup']) && !empty($element['#id'])) {
+    $attributes['id'] = $element['#id'];
+  }
+  // Add element's #type and #name as class to aid with JS/CSS selectors.
+  $attributes['class'] = array('form-item', 'control-group');
+  if (!empty($element['#type'])) {
+    $attributes['class'][] = 'form-type-' . strtr($element['#type'], '_', '-');
+  }
+  if (!empty($element['#name'])) {
+    $attributes['class'][] = 'form-item-' . strtr($element['#name'], array(' ' => '-', '_' => '-', '[' => '-', ']' => ''));
+  }
+  // Add a class for disabled elements to facilitate cross-browser styling.
+  if (!empty($element['#attributes']['disabled'])) {
+    $attributes['class'][] = 'form-disabled';
+  }
+  $output = '<div' . drupal_attributes($attributes) . '>' . "\n";
+
+  // If #title is not set, we don't display any label or required marker.
+  if (!isset($element['#title'])) {
+    $element['#title_display'] = 'none';
+  }
+  $prefix = isset($element['#field_prefix']) ? '<span class="field-prefix">' . $element['#field_prefix'] . '</span> ' : '';
+  $suffix = isset($element['#field_suffix']) ? ' <span class="field-suffix">' . $element['#field_suffix'] . '</span>' : '';
+
+  // If #type is checkbox or radio, set unique #title_display
+  if ($element['#type'] == 'checkbox' || $element['#type'] == 'radio') {
+    $element['#title_display'] = 'option';
+  }
+
+  switch ($element['#title_display']) {
+    case 'before':
+    case 'invisible':
+      $output .= ' ' . theme('form_element_label', $variables);
+      $output .= ' ' . $prefix . $element['#children'] . $suffix . "\n";
+      break;
+
+    case 'after':
+      $output .= ' ' . $prefix . $element['#children'] . $suffix;
+      $output .= ' ' . theme('form_element_label', $variables) . "\n";
+      break;
+
+    case 'none':
+    case 'attribute':
+      // Output no label and no required marker, only the children.
+      $output .= ' ' . $prefix . $element['#children'] . $suffix . "\n";
+      break;
+
+    case 'option':
+      $output .= ' ' . theme('form_element_option_label', $variables) . "\n";
+      break;
+  }
+
+  if (!empty($element['#description'])) {
+    $output .= '<div class="description">' . $element['#description'] . "</div>\n";
+  }
+
+  $output .= "</div>\n";
+
+  return $output;
+}
+
+/**
+ * Returns HTML for a checkbox and radio form elements label and required marker, with input element inside.
+ *
+ * @param $variables
+ *   An associative array containing:
+ *   - element: An associative array containing the properties of the element.
+ *     Properties used: #required, #title, #id, #value, #description.
+ * @return
+ *   A string containing the ouput of the checkbox/radio elements label, with input element inside.
+ */
+function drupstrap_form_element_option_label($variables) {
+  $element = $variables['element'];
+  // This is also used in the installer, pre-database setup.
+  $t = get_t();
+
+  // If title and required marker are both empty, output no label.
+  if ((!isset($element['#title']) || $element['#title'] === '') && empty($element['#required'])) {
+    return '';
+  }
+
+  // If the element is required, a required marker is appended to the label.
+  $required = !empty($element['#required']) ? theme('form_required_marker', array('element' => $element)) : '';
+
+  $title = filter_xss_admin($element['#title']);
+
+  $attributes = array();
+  // Show label only to screen readers to avoid disruption in visual flows.
+  if ($element['#title_display'] == 'invisible') {
+    $attributes['class'] = 'element-invisible';
+  }
+  $attributes['class'][] = $element['#type'];
+
+  if (!empty($element['#id'])) {
+    $attributes['for'] = $element['#id'];
+  }
+
+  return '<label' . drupal_attributes($attributes) . '>' . $element['#children'] . $t('!title !required', array('!title' => $title, '!required' => $required)) . "</label>\n";
+}
+
+/**
+ * Preprocessor for theme_button.
+ *
+ */
+function drupstrap_preprocess_button(&$variables) {
+  $variables['element']['#attributes']['class'][] = 'btn';
+
+  if (isset($variables['element']['#value'])) {
+    $classes = array(
+      t('Save and add') => 'btn-info',
+      t('Add another item') => 'btn-info',
+      t('Add effect') => 'btn-primary',
+      t('Add and configure') => 'btn-primary',
+      t('Update style') => 'btn-primary',
+      t('Download feature') => 'btn-primary',
+
+      t('Save') => 'btn-primary',
+      t('Apply') => 'btn-primary',
+      t('Create') => 'btn-primary',
+      t('Confirm') => 'btn-primary',
+      t('Submit') => 'btn-primary',
+      t('Export') => 'btn-primary',
+      t('Import') => 'btn-primary',
+      t('Restore') => 'btn-primary',
+      t('Rebuild') => 'btn-primary',
+      t('Search') => 'btn-primary',
+      t('Add') => 'btn-info',
+      t('Update') => 'btn-info',
+      t('Delete') => 'btn-danger',
+      t('Remove') => 'btn-danger',
+    );
+    foreach ($classes as $search => $class) {
+      if (strpos($variables['element']['#value'], $search) !== FALSE) {
+        $variables['element']['#attributes']['class'][] = $class;
+        break;
+      }
+    }
+  }
+}
+
+/**
+ * Returns HTML for a button form element.
+ *
+ * @param $variables
+ *   An associative array containing:
+ *   - element: An associative array containing the properties of the element.
+ *     Properties used: #attributes, #button_type, #name, #value.
+ * @return
+ *   A string containing the button form element output.
+ *
+ */
+function drupstrap_button($variables) {
+  $element = $variables['element'];
+  $label = check_plain($element['#value']);
+  element_set_attributes($element, array('id', 'name', 'value', 'type'));
+
+  $element['#attributes']['class'][] = 'form-' . $element['#button_type'];
+  if (!empty($element['#attributes']['disabled'])) {
+    $element['#attributes']['class'][] = 'form-button-disabled';
+  }
+
+  return '<button' . drupal_attributes($element['#attributes']) . '>'. $label .'</button>
+  '; // This line break adds inherent margin between multiple buttons
 }

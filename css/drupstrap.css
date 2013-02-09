@@ -1,3 +1,35 @@
 ul.inline, ol.inline {
   margin-left: -5px;
 }
+
+html.js input.form-autocomplete {
+  background-position: 100% 8px;
+}
+
+html.js input.throbbing {
+  background-position: 100% -12px;
+}
+
+.vertical-tabs .form-type-textfield input {
+  width: inherit;
+  box-sizing: inherit;
+}
+
+.form-type-item label,
+.form-type-textfield label,
+.form-type-textarea label {
+  font-weight: bold;
+}
+
+.form-required {
+  color: #b94a48;
+}
+
+.resizable textarea {
+  -webkit-border-bottom-right-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+  -moz-border-radius-bottomright: 0;
+  -moz-border-radius-bottomleft: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
