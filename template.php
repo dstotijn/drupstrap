@@ -591,8 +591,8 @@ function drupstrap_form_element($variables) {
   $prefix = isset($element['#field_prefix']) ? '<span class="field-prefix">' . $element['#field_prefix'] . '</span> ' : '';
   $suffix = isset($element['#field_suffix']) ? ' <span class="field-suffix">' . $element['#field_suffix'] . '</span>' : '';
 
-  // If #type is checkbox or radio, set unique #title_display
-  if ($element['#type'] == 'checkbox' || $element['#type'] == 'radio') {
+  // If #type is checkbox or radio and the element has a label, set unique #title_display
+  if (in_array($element['#type'], array('checkbox', 'radio')) && $element['#title_display'] != 'none') {
     $element['#title_display'] = 'option';
   }
 
@@ -730,4 +730,16 @@ function drupstrap_button($variables) {
 
   return '<button' . drupal_attributes($element['#attributes']) . '>'. $label .'</button>
   '; // This line break adds inherent margin between multiple buttons
+}
+
+/**
+ * Add Bootstrap 'table' class to tables.
+ *
+ * @param $variables
+ *   An array of variables to pass to the theme template.
+ * @param $hook
+ *   The name of the template being rendered ("table" in this case.)
+ */
+function drupstrap_preprocess_table(&$variables, $hook) {
+  $variables['attributes']['class'][] = 'table';
 }

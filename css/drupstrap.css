@@ -33,3 +33,12 @@ html.js input.throbbing {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
+
+td label {
+  margin-bottom: 0;
+}
+
+.radio .form-item > input[type="radio"], 
+.checkbox .form-item > input[type="checkbox"] {
+  margin-left: inherit;
+}
