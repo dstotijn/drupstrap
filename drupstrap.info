@@ -1,7 +1,7 @@
 screenshot  = screenshot.png
 name        = Drupstrap
-description = Base theme based on <a href="https://github.com/twbs/bootstrap">Bootstrap</a>.
-version     = 3.0
+description = <a href="http://getbootstrap.com/">Bootstrap</a> base theme.
+version     = 7.x-3.0
 core        = 7.x
 base theme  = zen
 
