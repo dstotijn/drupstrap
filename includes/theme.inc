@@ -14,6 +14,9 @@ function drupstrap_css_alter(&$css) {
     'type' => 'external',
     'every_page' => TRUE,
     'media' => 'all',
+    'preprocess' => TRUE,
     'group' => CSS_THEME,
+    'browsers' => array('IE' => TRUE, '!IE' => TRUE),
+    'weight' => -2,
   );
 }
