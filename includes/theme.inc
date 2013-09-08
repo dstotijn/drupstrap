@@ -16,3 +16,17 @@ function drupstrap_css_alter(&$css) {
     'weight' => -2,
   );
 }
+
+/**
+ * Implements template_preprocess_html().
+ */
+function drupstrap_preprocess_html(&$variables, $hook) {
+  $viewport = array(
+    '#tag' => 'meta',
+    '#attributes' => array(
+      'name' => 'viewport',
+      'content' => 'width=device-width, initial-scale=1.0'
+    ),
+  );
+  drupal_add_html_head($viewport, 'bootstrap_viewport');
+}

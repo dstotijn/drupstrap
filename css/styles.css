@@ -1,0 +1,12 @@
+#header {
+  margin-top: 40px;
+}
+
+.header__site-name {
+  margin-top: 0;
+  line-height: 57px;
+}
+
+.header__logo-image {
+  margin-right: 20px;
+}
