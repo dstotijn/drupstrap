@@ -25,7 +25,7 @@
         <?php print theme('links__system_secondary_menu', array(
           'links' => $secondary_menu,
           'attributes' => array(
-            'class' => array('pull-right'),
+            'class' => array('list-inline', 'pull-right'),
           ),
           'heading' => array(
             'text' => $secondary_menu_heading,
@@ -40,9 +40,9 @@
 
   </header>
 
-  <div id="main">
+  <div id="main" class="row">
 
-    <div id="content" class="column" role="main">
+    <div id="content" class="col-md-6 col-sm-7" role="main">
       <?php print render($page['highlighted']); ?>
       <?php print $breadcrumb; ?>
       <a id="main-content"></a>
@@ -65,12 +65,7 @@
 
       <?php if ($main_menu): ?>
         <nav id="main-menu" role="navigation" tabindex="-1">
-          <?php
-          // This code snippet is hard to modify. We recommend turning off the
-          // "Main menu" on your sub-theme's settings form, deleting this PHP
-          // code block, and, instead, using the "Menu block" module.
-          // @see https://drupal.org/project/menu_block
-          print theme('links__system_main_menu', array(
+          <?php print theme('links__system_main_menu', array(
             'links' => $main_menu,
             'attributes' => array(
               'class' => array('links', 'inline', 'clearfix'),
