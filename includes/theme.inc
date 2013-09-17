@@ -113,3 +113,14 @@ function drupstrap_breadcrumb($variables) {
 
   return $output;
 }
+
+/**
+ * Implements preprocess_node().
+ */
+function drupstrap_preprocess_node(&$variables) {
+  if ($variables['display_submitted']) {
+    $variables['submitted'] = t('!datetime', array(
+      '!datetime' => $variables['date'],
+    ));
+  }
+}
