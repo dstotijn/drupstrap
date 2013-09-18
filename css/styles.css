@@ -1,5 +1,5 @@
 #header {
-  margin-top: 40px;
+  margin: 40px 0 14px;
 }
 
 .header__site-name {
@@ -9,4 +9,8 @@
 
 .header__logo-image {
   margin-right: 20px;
+}
+
+.nav {
+  margin-bottom: 20px;
 }
