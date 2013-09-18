@@ -190,3 +190,42 @@ function drupstrap_menu_local_task($variables) {
 
   return '<li' . ($class ? ' class="' . $class . '"' : '') . '>' . l($link_text, $link['href'], $link['localized_options']) . "</li>\n";
 }
+
+/**
+ * Implements theme_status_messages().
+ */
+function drupstrap_status_messages($variables) {
+  $display = $variables['display'];
+  $output = '';
+
+  // Match Drupal message types with Bootstrap message types
+  $bs_type = array(
+    'status' => 'info',
+    'warning' => 'warning',
+    'error' => 'danger',
+  );
+
+  $status_heading = array(
+    'status' => t('Status message'),
+    'error' => t('Error message'),
+    'warning' => t('Warning message'),
+  );
+  foreach (drupal_get_messages($display) as $type => $messages) {
+    $output .= "<div class=\"alert alert-$bs_type[$type]\">\n";
+    if (!empty($status_heading[$type])) {
+      $output .= '<h2 class="sr-only">' . $status_heading[$type] . "</h2>\n";
+    }
+    if (count($messages) > 1) {
+      $output .= " <ul class=\"messages__list\">\n";
+      foreach ($messages as $message) {
+        $output .= '  <li class=\"messages__item\">' . $message . "</li>\n";
+      }
+      $output .= " </ul>\n";
+    }
+    else {
+      $output .= $messages[0];
+    }
+    $output .= "</div>\n";
+  }
+  return $output;
+}
