@@ -11,11 +11,10 @@
       <p class="submitted text-muted">
         <?php print $user_picture; ?>
         <?php print $submitted; ?>
+        <?php if ($unpublished): ?>
+          <span class="label label-default"><?php print t('Unpublished'); ?></span>
+        <?php endif; ?>
       </p>
-    <?php endif; ?>
-
-    <?php if ($unpublished): ?>
-      <mark class="unpublished"><?php print t('Unpublished'); ?></mark>
     <?php endif; ?>
   <?php endif; ?>
 
