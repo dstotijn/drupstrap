@@ -229,3 +229,10 @@ function drupstrap_status_messages($variables) {
   }
   return $output;
 }
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function drupstrap_preprocess_table(&$variables, $hook) {
+  $variables['attributes']['class'][] = 'table';
+}
