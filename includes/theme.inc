@@ -123,6 +123,18 @@ function drupstrap_preprocess_node(&$variables) {
       '!datetime' => $variables['date'],
     ));
   }
+
+  if (isset($variables['content']['links']['node']['#links']['node-readmore'])) {
+    $variables['content']['links']['node']['#links']['node-readmore']['title'] = t('Read more…');
+    $variables['content']['links']['node']['#links']['node-readmore']['attributes']['class'] = array(
+      'btn',
+      'btn-primary', 
+    );
+    $variables['content']['links']['#attributes']['class'] = array_diff(
+      $variables['content']['links']['#attributes']['class'],
+      array('links', 'inline'));
+    $variables['content']['links']['#attributes']['class'][] = 'list-unstyled';
+  }
 }
 
 /**
