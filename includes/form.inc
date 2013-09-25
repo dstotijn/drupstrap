@@ -101,13 +101,28 @@ function drupstrap_preprocess_password(&$variables) {
  */
 function drupstrap_preprocess_button(&$variables) {
   $element = &$variables['element'];
+  $el_style = t($element['#value']);
 
   $bs_type = array(
     t('Save') => 'btn-primary',
+    t('Create') => 'btn-primary',
+    t('Update') => 'btn-primary',
+    t('Execute') => 'btn-primary',
+    t('Switch') => 'btn-primary',
+    t('Run') => 'btn-primary',
+    t('Log in') => 'btn-primary',
+    t('Filter') => 'btn-info',
+    t('Add') => 'btn-info',
+    t('Upload') => 'btn-info',
     t('Delete') => 'btn-danger',
   );
-  if (array_key_exists(t($element['#value']), $bs_type)) {
-    $button_style = $bs_type[t($element['#value'])];
+
+  if (strpos($el_style, t('Save')) !== false) $el_style = t('Save');
+  if (strpos($el_style, t('Create')) !== false) $el_style = t('Create');
+  if (strpos($el_style, t('Run')) !== false) $el_style = t('Run');
+
+  if (array_key_exists($el_style, $bs_type)) {
+    $button_style = $bs_type[$el_style];
   } else {
     $button_style = 'btn-default';
   }
