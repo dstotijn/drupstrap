@@ -2,6 +2,10 @@
   margin: 40px 0 14px;
 }
 
+#main {
+  margin-bottom: 20px;
+}
+
 .header__site-name {
   margin-top: 0;
   line-height: 57px;
@@ -78,3 +82,15 @@ div.tree-child-horizontal {
   box-sizing: content-border-box;
 }
 
+.field-label {
+  font-weight: bold;
+}
+
+h1 a, h1 a:hover,
+h2 a, h2 a:hover,
+h3 a, h3 a:hover,
+h4 a, h4 a:hover,
+h5 a, h5 a:hover,
+h6 a, h6 a:hover {
+  color: #333;
+}
